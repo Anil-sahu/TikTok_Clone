@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 import 'package:tiktok_clone/constant.dart';
+import 'package:tiktok_clone/view/screen/auth_screen/signup_screen.dart';
 import 'package:tiktok_clone/view/widget/CustomeButton.dart';
 import 'package:tiktok_clone/view/widget/TextInputField.dart';
 
@@ -62,7 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: width - 50,
                     height: 50,
                     child: CustomeButton(
-                      onTap: () {},
+                      onTap: () {
+                        authController.login(
+                            _emailController.text, _passwordController.text);
+                      },
                       text: "Login",
                     ),
                   ),
@@ -77,7 +82,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(fontSize: 20),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(() => const SignUpScreen());
+                        },
                         child: Text("Register",
                             style: TextStyle(fontSize: 20, color: buttonColor)),
                       )

@@ -20,15 +20,22 @@ class TextInputField extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: isObs,
+      cursorColor: buttonColor,
       decoration: InputDecoration(
-          label: Text(labelText),
-          prefixIcon: Icon(icon),
+          label: Text(
+            labelText,
+            style: const TextStyle(color: borderColor),
+          ),
+          prefixIcon: Icon(
+            icon,
+            color: borderColor,
+          ),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: const BorderSide(color: borderColor)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
-              borderSide: const BorderSide(color: borderColor))),
+              borderSide: BorderSide(color: buttonColor!))),
     );
   }
 }
