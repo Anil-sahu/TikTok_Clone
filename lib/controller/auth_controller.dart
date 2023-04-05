@@ -16,11 +16,17 @@ class AuthController extends GetxController {
   late Rx<User?> _user;
 
   File? get profileImage => profile.value;
+  User get user => _user.value!;
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   @override
   void onReady() {
-    super.onReady();
     _user = Rx<User?>(auth.currentUser);
+    super.onReady();
+
     _user.bindStream(auth.authStateChanges());
     ever(_user, setInitial);
   }

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constant.dart';
 import 'package:tiktok_clone/controller/video_controller.dart';
+import 'package:tiktok_clone/view/screen/comment_screen.dart';
 import 'package:tiktok_clone/view/screen/videoItem.dart';
 import 'package:tiktok_clone/view/widget/CircleAnimation.dart';
 import 'package:video_player/video_player.dart';
@@ -145,9 +146,14 @@ class _VideoScreenState extends State<VideoScreen> {
                                 Column(
                                   children: [
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        videoController.likeVideo(data.id);
+                                      },
                                       child: Icon(
-                                        Icons.favorite,
+                                        data.likes.contains(
+                                                authController.user.uid)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
                                         size: 40,
                                         color: buttonColor,
                                       ),
@@ -166,7 +172,10 @@ class _VideoScreenState extends State<VideoScreen> {
                                       height: 15,
                                     ),
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.to(
+                                            () => CommentScreen(id: data.id));
+                                      },
                                       child: Icon(
                                         Icons.comment,
                                         size: 40,

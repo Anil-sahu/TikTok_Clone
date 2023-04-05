@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constant.dart';
 import 'package:tiktok_clone/model/video_model.dart';
@@ -16,5 +17,19 @@ class VideoController extends GetxController {
       }
       return retVideo;
     }));
+  }
+
+  likeVideo(String id) async {
+    DocumentSnapshot doc = await firestore.collection("videos").doc(id).get();
+    var uid = authController.user.uid;
+    if ((doc.data()! as dynamic)['likes'].contains(uid)) {
+      await firestore.collection("post").doc(id).update({
+        "likes": FieldValue.arrayRemove([uid])
+      });
+    } else {
+      await firestore.collection("post").doc(id).update({
+        "likes": FieldValue.arrayUnion([uid])
+      });
+    }
   }
 }
