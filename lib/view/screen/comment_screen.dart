@@ -76,7 +76,15 @@ class _CommentScreenState extends State<CommentScreen> {
                           ],
                         ),
                         trailing: InkWell(
-                            onTap: () {}, child: const Icon(Icons.favorite)),
+                            onTap: () {
+                              commentController.likeComment(comment.id);
+                            },
+                            child: Icon(
+                              comment.likes.contains(authController.user.uid)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.redAccent,
+                            )),
                       );
                     }),
               )),

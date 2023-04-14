@@ -16,15 +16,15 @@ class AuthController extends GetxController {
   late Rx<User?> _user;
 
   File? get profileImage => profile.value;
-  User get user => _user.value!;
+  User get user => auth.currentUser!;
   @override
   void onInit() {
+    _user = Rx<User?>(auth.currentUser);
     super.onInit();
   }
 
   @override
   void onReady() {
-    _user = Rx<User?>(auth.currentUser);
     super.onReady();
 
     _user.bindStream(auth.authStateChanges());
@@ -92,5 +92,9 @@ class AuthController extends GetxController {
     } catch (e) {
       Get.snackbar("Login error", e.toString());
     }
+  }
+
+  void signOut() async {
+    await auth.signOut();
   }
 }
