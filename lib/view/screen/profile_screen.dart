@@ -102,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Column(
                               children: [
                                 Text(
-                                  controller.user['like'] ?? "00",
+                                  controller.user['like'] ?? "0",
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -150,9 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         itemCount: controller.user['thumbnail'].length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 2,
-                                crossAxisSpacing: 2),
+                                crossAxisCount: 2, crossAxisSpacing: 0),
                         itemBuilder: (context, index) {
                           String thumbnail =
                               controller.user['thumbnail'][index];

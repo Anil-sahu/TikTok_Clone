@@ -78,6 +78,7 @@ class _VideoScreenState extends State<VideoScreen> {
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               var data = videoController.videoList[index];
+              print(videoController.videoList.length);
               return Stack(
                 children: [
                   VideoItem(

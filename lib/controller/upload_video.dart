@@ -7,6 +7,16 @@ import 'package:tiktok_clone/model/video_model.dart';
 import 'package:video_compress/video_compress.dart';
 
 class UploadVideoController extends GetxController {
+  var loading = false.obs;
+
+  startLoading() {
+    loading.value = true;
+  }
+
+  stopLoading() {
+    loading.value = false;
+  }
+
   uploadVideoToStorage(String id, String videoPath) async {
     Reference ref = storage.ref().child("video").child(id);
     var uploadtask = await ref.putFile(await compressVideo(videoPath));
@@ -34,10 +44,11 @@ class UploadVideoController extends GetxController {
 
   uploadVedio(String name, String caption, String videoUrl) async {
     try {
+      startLoading();
       String userId = auth.currentUser!.uid;
       DocumentSnapshot usersnap =
           await firestore.collection("user").doc(userId).get();
-      var alldocs = await firestore.collection("video").get();
+      var alldocs = await firestore.collection("post").get();
       int len = alldocs.docs.length;
       var videourl = await uploadVideoToStorage("video $len", videoUrl);
       var thumbnailUrl = await uploadImageToStorage("video $len", videoUrl);
@@ -56,7 +67,8 @@ class UploadVideoController extends GetxController {
       await firestore
           .collection("post")
           .doc("video $len")
-          .set(videoModel.toMap());
+          .set(videoModel.toMap())
+          .whenComplete(() => stopLoading());
       Get.back();
     } catch (e) {
       debugPrint(e.toString());

@@ -49,61 +49,69 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          SizedBox(
-            width: width,
-            height: height / 1.5,
-            child: VideoPlayer(controller),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                Container(
-                  width: width - 20,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextInputField(
-                      controller: nameController,
-                      labelText: "Video title",
-                      isObs: false,
-                      icon: Icons.video_label),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  width: width - 20,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: TextInputField(
-                      controller: captionController,
-                      labelText: "Video Caption",
-                      isObs: false,
-                      icon: Icons.video_label),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                CustomeButton(
-                  onTap: () {
-                    videoController.uploadVedio(nameController.text.toString(),
-                        captionController.text.toString(), widget.videoPath);
-                  },
-                  text: "share",
-                )
-              ],
+    return Obx(
+      () => videoController.loading.value
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Scaffold(
+              body: SingleChildScrollView(
+                  child: Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: width,
+                    height: height / 1.5,
+                    child: VideoPlayer(controller),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: width - 20,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TextInputField(
+                              controller: nameController,
+                              labelText: "Video title",
+                              isObs: false,
+                              icon: Icons.video_label),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: width - 20,
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TextInputField(
+                              controller: captionController,
+                              labelText: "Video Caption",
+                              isObs: false,
+                              icon: Icons.video_label),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        CustomeButton(
+                          onTap: () {
+                            videoController.uploadVedio(
+                                nameController.text.toString(),
+                                captionController.text.toString(),
+                                widget.videoPath);
+                          },
+                          text: "share",
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              )),
             ),
-          )
-        ],
-      )),
     );
   }
 }
